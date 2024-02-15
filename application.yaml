@@ -1,18 +1,65 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: my-helm-chart
+# spec:
+#   destination:
+#     namespace: nginx2
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://github.com/HIRO-MicroDataCenters-BV/argocd-demo02.git
+#     path: hello-world-chart/hello-world
+#     targetRevision: "*"  # Use the latest version
+#   helm:
+#     valueFiles:
+#       - values.yaml
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+
+
+
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: my-helm-chart
+# spec:
+#   destination:
+#     namespace: nginx2
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://github.com/HIRO-MicroDataCenters-BV/argocd-demo02.git
+#     path: hello-world-chart/hello-world
+#     targetRevision: '>=0.1.0 <0.2.0'  # Track version range 0.1.x
+#   helm:
+#     valueFiles:
+#       - values.yaml
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-helm-chart
+  name: my-app
 spec:
   destination:
+    server: 'https://kubernetes.default.svc'
     namespace: nginx2
-    server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/HIRO-MicroDataCenters-BV/argocd-demo02.git
     path: hello-world-chart/hello-world
-    targetRevision: 0.*.*
+    targetRevision: 'HEAD'  # Use the latest commit
   helm:
     valueFiles:
       - values.yaml
+    releaseName: my-release
+    chart: my-chart
+    version: '*'  # Using wildcard to track the latest version
+  project: default
   syncPolicy:
     automated:
       prune: true
