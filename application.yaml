@@ -58,7 +58,7 @@ spec:
       - values.yaml
     releaseName: my-release
     chart: my-chart
-    version: '*'  # Using wildcard to track the latest version
+    version: ''  # Using wildcard to track the latest version
   project: default
   syncPolicy:
     automated:
